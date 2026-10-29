@@ -1,0 +1,6 @@
+{
+  "name": "AquaPulse - AI Water Treatment Plant Monitor",
+  "description": "AI-Powered Water Treatment Plant Monitoring & Optimization platform built with MERN stack and Google Gemini.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
