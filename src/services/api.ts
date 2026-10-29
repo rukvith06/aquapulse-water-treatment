@@ -1,6 +1,23 @@
 // API client wrapper communicating with the Node.js/Express backend
 const API_BASE = '/api';
 
+async function parseApiResponse(response: Response) {
+  const contentType = response.headers.get('content-type') || '';
+  if (!contentType.includes('application/json')) {
+    throw new Error(
+      `API request failed with ${response.status} ${response.statusText}: expected JSON but received ${contentType || 'an unknown content type'}.`
+    );
+  }
+
+  try {
+    return await response.json();
+  } catch (error) {
+    throw new Error(`API returned invalid JSON (${response.status} ${response.statusText}).`, {
+      cause: error,
+    });
+  }
+}
+
 function getAuthHeaders(): HeadersInit {
   const token = localStorage.getItem('aquapulse_token');
   const headers: Record<string, string> = {
@@ -20,7 +37,7 @@ export const api = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(credentials),
     });
-    return res.json();
+    return parseApiResponse(res);
   },
 
   async register(data: any) {
@@ -29,14 +46,14 @@ export const api = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     });
-    return res.json();
+    return parseApiResponse(res);
   },
 
   async getCurrentUser() {
     const res = await fetch(`${API_BASE}/auth/me`, {
       headers: getAuthHeaders(),
     });
-    return res.json();
+    return parseApiResponse(res);
   },
 
   async updateProfile(data: any) {
@@ -45,13 +62,13 @@ export const api = {
       headers: getAuthHeaders(),
       body: JSON.stringify(data),
     });
-    return res.json();
+    return parseApiResponse(res);
   },
 
   // Water Readings
   async getLatestReading() {
     const res = await fetch(`${API_BASE}/water-readings/latest`);
-    return res.json();
+    return parseApiResponse(res);
   },
 
   async getReadingHistory(limit: number = 50, stage?: string) {
@@ -59,7 +76,7 @@ export const api = {
     url.searchParams.set('limit', limit.toString());
     if (stage) url.searchParams.set('stage', stage);
     const res = await fetch(url.toString());
-    return res.json();
+    return parseApiResponse(res);
   },
 
   async addManualReading(data: any) {
@@ -68,7 +85,7 @@ export const api = {
       headers: getAuthHeaders(),
       body: JSON.stringify(data),
     });
-    return res.json();
+    return parseApiResponse(res);
   },
 
   async triggerTick() {
@@ -76,13 +93,13 @@ export const api = {
       method: 'POST',
       headers: getAuthHeaders(),
     });
-    return res.json();
+    return parseApiResponse(res);
   },
 
   // Chemical Dosage
   async getDosages() {
     const res = await fetch(`${API_BASE}/dosage`);
-    return res.json();
+    return parseApiResponse(res);
   },
 
   async applyDosage(data: any) {
@@ -91,12 +108,12 @@ export const api = {
       headers: getAuthHeaders(),
       body: JSON.stringify(data),
     });
-    return res.json();
+    return parseApiResponse(res);
   },
 
   async getDosageHistory(limit: number = 30) {
     const res = await fetch(`${API_BASE}/dosage/history?limit=${limit}`);
-    return res.json();
+    return parseApiResponse(res);
   },
 
   // Anomalies
@@ -106,7 +123,7 @@ export const api = {
     if (filter?.severity) url.searchParams.set('severity', filter.severity);
     if (filter?.parameter) url.searchParams.set('parameter', filter.parameter);
     const res = await fetch(url.toString());
-    return res.json();
+    return parseApiResponse(res);
   },
 
   async updateAnomalyStatus(id: string, data: { status: string; resolutionNotes?: string; resolvedBy?: string }) {
@@ -115,7 +132,7 @@ export const api = {
       headers: getAuthHeaders(),
       body: JSON.stringify(data),
     });
-    return res.json();
+    return parseApiResponse(res);
   },
 
   async injectAnomaly(type: string) {
@@ -124,23 +141,23 @@ export const api = {
       headers: getAuthHeaders(),
       body: JSON.stringify({ type }),
     });
-    return res.json();
+    return parseApiResponse(res);
   },
 
   // Equipment & Maintenance
   async getEquipment() {
     const res = await fetch(`${API_BASE}/equipment`);
-    return res.json();
+    return parseApiResponse(res);
   },
 
   async getEquipmentById(id: string) {
     const res = await fetch(`${API_BASE}/equipment/${id}`);
-    return res.json();
+    return parseApiResponse(res);
   },
 
   async getMaintenanceRecords() {
     const res = await fetch(`${API_BASE}/maintenance`);
-    return res.json();
+    return parseApiResponse(res);
   },
 
   async createMaintenanceRecord(data: any) {
@@ -149,7 +166,7 @@ export const api = {
       headers: getAuthHeaders(),
       body: JSON.stringify(data),
     });
-    return res.json();
+    return parseApiResponse(res);
   },
 
   // Alerts
@@ -158,7 +175,7 @@ export const api = {
     if (filter?.status) url.searchParams.set('status', filter.status);
     if (filter?.severity) url.searchParams.set('severity', filter.severity);
     const res = await fetch(url.toString());
-    return res.json();
+    return parseApiResponse(res);
   },
 
   async acknowledgeAlert(id: string, acknowledgedBy?: string) {
@@ -167,7 +184,7 @@ export const api = {
       headers: getAuthHeaders(),
       body: JSON.stringify({ acknowledgedBy }),
     });
-    return res.json();
+    return parseApiResponse(res);
   },
 
   async acknowledgeAllAlerts(acknowledgedBy?: string) {
@@ -176,24 +193,24 @@ export const api = {
       headers: getAuthHeaders(),
       body: JSON.stringify({ acknowledgedBy }),
     });
-    return res.json();
+    return parseApiResponse(res);
   },
 
   // Analytics
   async getAnalytics(timeframe: string = 'today') {
     const res = await fetch(`${API_BASE}/analytics?timeframe=${timeframe}`);
-    return res.json();
+    return parseApiResponse(res);
   },
 
   // Reports
   async getReports() {
     const res = await fetch(`${API_BASE}/reports`);
-    return res.json();
+    return parseApiResponse(res);
   },
 
   async getReportById(id: string) {
     const res = await fetch(`${API_BASE}/reports/${id}`);
-    return res.json();
+    return parseApiResponse(res);
   },
 
   async generateReport(reportType: string, generatedBy?: string) {
@@ -202,7 +219,7 @@ export const api = {
       headers: getAuthHeaders(),
       body: JSON.stringify({ reportType, generatedBy }),
     });
-    return res.json();
+    return parseApiResponse(res);
   },
 
   // AI Integration (via Backend Express proxy only!)
@@ -212,7 +229,7 @@ export const api = {
       headers: getAuthHeaders(),
       body: JSON.stringify(params || {}),
     });
-    return res.json();
+    return parseApiResponse(res);
   },
 
   async sendChatMessage(message: string, userId?: string) {
@@ -221,12 +238,12 @@ export const api = {
       headers: getAuthHeaders(),
       body: JSON.stringify({ message, userId }),
     });
-    return res.json();
+    return parseApiResponse(res);
   },
 
   async getChatHistory() {
     const res = await fetch(`${API_BASE}/ai/chat-history`);
-    return res.json();
+    return parseApiResponse(res);
   },
 
   async clearChatHistory() {
@@ -234,13 +251,13 @@ export const api = {
       method: 'DELETE',
       headers: getAuthHeaders(),
     });
-    return res.json();
+    return parseApiResponse(res);
   },
 
   // Simulation Controls
   async getSimulationStatus() {
     const res = await fetch(`${API_BASE}/simulation/status`);
-    return res.json();
+    return parseApiResponse(res);
   },
 
   async toggleSimulation() {
@@ -248,7 +265,7 @@ export const api = {
       method: 'POST',
       headers: getAuthHeaders(),
     });
-    return res.json();
+    return parseApiResponse(res);
   },
 
   async setSimulationSpeed(intervalMs: number) {
@@ -257,6 +274,6 @@ export const api = {
       headers: getAuthHeaders(),
       body: JSON.stringify({ intervalMs }),
     });
-    return res.json();
+    return parseApiResponse(res);
   },
 };

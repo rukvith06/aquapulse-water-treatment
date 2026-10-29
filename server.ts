@@ -1,7 +1,7 @@
 import express from 'express';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
-import { createServer as createViteServer } from 'vite';
 import { connectDB } from './server/config/db';
 import { seedInitialData, startSimulation } from './server/services/simulationService';
 
@@ -23,7 +23,7 @@ dotenv.config();
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 const isProduction = process.env.NODE_ENV === 'production';
 
-async function bootstrapServer() {
+export async function createApp({ serverless = false }: { serverless?: boolean } = {}) {
   const app = express();
 
   // Basic Middleware
@@ -43,7 +43,9 @@ async function bootstrapServer() {
 
   // Seed default data & start sensor simulation engine
   await seedInitialData();
-  startSimulation(4000);
+  if (!serverless) {
+    startSimulation(4000);
+  }
 
   // Mount Backend API Routes
   app.use('/api/auth', authRoutes);
@@ -68,14 +70,19 @@ async function bootstrapServer() {
     });
   });
 
+  app.use('/api', (req, res) => {
+    res.status(404).json({ success: false, message: 'API endpoint not found.' });
+  });
+
   // Mount Vite or Static Frontend
-  if (!isProduction) {
+  if (!serverless && !isProduction) {
+    const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa',
     });
     app.use(vite.middlewares);
-  } else {
+  } else if (!serverless) {
     const distPath = path.resolve(process.cwd(), 'dist');
     app.use(express.static(distPath));
     app.get('*', (req, res) => {
@@ -83,12 +90,19 @@ async function bootstrapServer() {
     });
   }
 
+  return app;
+}
+
+async function bootstrapServer() {
+  const app = await createApp();
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`🌊 AquaPulse MERN Server listening on http://0.0.0.0:${PORT}`);
   });
 }
 
-bootstrapServer().catch((err) => {
-  console.error('Fatal Server Boot Error:', err);
-  process.exit(1);
-});
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  bootstrapServer().catch((err) => {
+    console.error('Fatal Server Boot Error:', err);
+    process.exit(1);
+  });
+}
