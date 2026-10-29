@@ -2,21 +2,21 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
-import { connectDB } from './server/config/db';
-import { seedInitialData, startSimulation } from './server/services/simulationService';
+import { connectDB } from './server/config/db.ts';
+import { seedInitialData, startSimulation } from './server/services/simulationService.ts';
 
 // Import route modules
-import authRoutes from './server/routes/authRoutes';
-import readingRoutes from './server/routes/readingRoutes';
-import dosageRoutes from './server/routes/dosageRoutes';
-import anomalyRoutes from './server/routes/anomalyRoutes';
-import equipmentRoutes from './server/routes/equipmentRoutes';
-import maintenanceRoutes from './server/routes/maintenanceRoutes';
-import alertRoutes from './server/routes/alertRoutes';
-import analyticsRoutes from './server/routes/analyticsRoutes';
-import reportRoutes from './server/routes/reportRoutes';
-import aiRoutes from './server/routes/aiRoutes';
-import simulationRoutes from './server/routes/simulationRoutes';
+import authRoutes from './server/routes/authRoutes.ts';
+import readingRoutes from './server/routes/readingRoutes.ts';
+import dosageRoutes from './server/routes/dosageRoutes.ts';
+import anomalyRoutes from './server/routes/anomalyRoutes.ts';
+import equipmentRoutes from './server/routes/equipmentRoutes.ts';
+import maintenanceRoutes from './server/routes/maintenanceRoutes.ts';
+import alertRoutes from './server/routes/alertRoutes.ts';
+import analyticsRoutes from './server/routes/analyticsRoutes.ts';
+import reportRoutes from './server/routes/reportRoutes.ts';
+import aiRoutes from './server/routes/aiRoutes.ts';
+import simulationRoutes from './server/routes/simulationRoutes.ts';
 
 dotenv.config();
 

@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from 'mongoose';
-import { dbState, memoryDb } from '../config/db';
+import { dbState, memoryDb } from '../config/db.ts';
 
 export interface IAlert extends Document {
   type: 'Water Quality' | 'Anomaly' | 'Equipment' | 'Chemical Dosage' | 'System';

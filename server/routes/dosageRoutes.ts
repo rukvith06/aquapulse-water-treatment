@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { ChemicalDosageModel } from '../models/ChemicalDosage';
-import { simulationState } from '../services/simulationService';
-import { AlertModel } from '../models/Alert';
+import { ChemicalDosageModel } from '../models/ChemicalDosage.ts';
+import { simulationState } from '../services/simulationService.ts';
+import { AlertModel } from '../models/Alert.ts';
 
 const router = Router();
 

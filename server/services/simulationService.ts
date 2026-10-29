@@ -1,10 +1,10 @@
-import { WaterReadingModel, IWaterReading } from '../models/WaterReading';
-import { AnomalyModel } from '../models/Anomaly';
-import { AlertModel } from '../models/Alert';
-import { EquipmentModel } from '../models/Equipment';
-import { ChemicalDosageModel } from '../models/ChemicalDosage';
-import { MaintenanceRecordModel } from '../models/MaintenanceRecord';
-import { UserModel } from '../models/User';
+import { WaterReadingModel, IWaterReading } from '../models/WaterReading.ts';
+import { AnomalyModel } from '../models/Anomaly.ts';
+import { AlertModel } from '../models/Alert.ts';
+import { EquipmentModel } from '../models/Equipment.ts';
+import { ChemicalDosageModel } from '../models/ChemicalDosage.ts';
+import { MaintenanceRecordModel } from '../models/MaintenanceRecord.ts';
+import { UserModel } from '../models/User.ts';
 import bcrypt from 'bcryptjs';
 
 export interface SimulationState {

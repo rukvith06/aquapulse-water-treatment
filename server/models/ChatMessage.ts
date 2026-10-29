@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from 'mongoose';
-import { dbState, memoryDb } from '../config/db';
+import { dbState, memoryDb } from '../config/db.ts';
 
 export interface IChatMessage extends Document {
   sender: 'user' | 'assistant' | 'system';

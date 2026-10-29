@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { WaterReadingModel } from '../models/WaterReading';
-import { runSimulationTick } from '../services/simulationService';
-import { AnomalyModel } from '../models/Anomaly';
-import { AlertModel } from '../models/Alert';
+import { WaterReadingModel } from '../models/WaterReading.ts';
+import { runSimulationTick } from '../services/simulationService.ts';
+import { AnomalyModel } from '../models/Anomaly.ts';
+import { AlertModel } from '../models/Alert.ts';
 
 const router = Router();
 

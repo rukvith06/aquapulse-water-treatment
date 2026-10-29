@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { AlertModel } from '../models/Alert';
+import { AlertModel } from '../models/Alert.ts';
 
 const router = Router();
 

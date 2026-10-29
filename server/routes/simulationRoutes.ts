@@ -4,8 +4,8 @@ import {
   startSimulation,
   stopSimulation,
   seedInitialData,
-} from '../services/simulationService';
-import { dbState } from '../config/db';
+} from '../services/simulationService.ts';
+import { dbState } from '../config/db.ts';
 
 const router = Router();
 

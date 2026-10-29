@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { AnomalyModel } from '../models/Anomaly';
-import { triggerForcedAnomaly } from '../services/simulationService';
+import { AnomalyModel } from '../models/Anomaly.ts';
+import { triggerForcedAnomaly } from '../services/simulationService.ts';
 
 const router = Router();
 

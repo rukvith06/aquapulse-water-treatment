@@ -1,11 +1,11 @@
 import { Router } from 'express';
-import { generateDosageRecommendation, chatWithAssistant } from '../services/geminiService';
-import { WaterReadingModel } from '../models/WaterReading';
-import { AnomalyModel } from '../models/Anomaly';
-import { AlertModel } from '../models/Alert';
-import { ChemicalDosageModel } from '../models/ChemicalDosage';
-import { ChatMessageModel } from '../models/ChatMessage';
-import { simulationState } from '../services/simulationService';
+import { generateDosageRecommendation, chatWithAssistant } from '../services/geminiService.ts';
+import { WaterReadingModel } from '../models/WaterReading.ts';
+import { AnomalyModel } from '../models/Anomaly.ts';
+import { AlertModel } from '../models/Alert.ts';
+import { ChemicalDosageModel } from '../models/ChemicalDosage.ts';
+import { ChatMessageModel } from '../models/ChatMessage.ts';
+import { simulationState } from '../services/simulationService.ts';
 
 const router = Router();
 

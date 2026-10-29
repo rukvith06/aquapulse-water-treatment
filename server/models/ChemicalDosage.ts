@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from 'mongoose';
-import { dbState, memoryDb } from '../config/db';
+import { dbState, memoryDb } from '../config/db.ts';
 
 export interface IChemicalDosage extends Document {
   chemicalName: string; // e.g., 'Alum Coagulant', 'Sodium Hypochlorite (Chlorine)', 'Soda Ash', 'Polymer Flocculant'

@@ -1,7 +1,7 @@
 import { Router, Response } from 'express';
 import bcrypt from 'bcryptjs';
-import { UserModel } from '../models/User';
-import { generateToken, authMiddleware, AuthRequest } from '../middleware/auth';
+import { UserModel } from '../models/User.ts';
+import { generateToken, authMiddleware, AuthRequest } from '../middleware/auth.ts';
 
 const router = Router();
 

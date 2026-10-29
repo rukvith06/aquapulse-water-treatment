@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { WaterReadingModel } from '../models/WaterReading';
-import { AnomalyModel } from '../models/Anomaly';
-import { ChemicalDosageModel } from '../models/ChemicalDosage';
-import { MaintenanceRecordModel } from '../models/MaintenanceRecord';
+import { WaterReadingModel } from '../models/WaterReading.ts';
+import { AnomalyModel } from '../models/Anomaly.ts';
+import { ChemicalDosageModel } from '../models/ChemicalDosage.ts';
+import { MaintenanceRecordModel } from '../models/MaintenanceRecord.ts';
 
 const router = Router();
 

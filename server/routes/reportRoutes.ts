@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { ReportModel } from '../models/Report';
-import { WaterReadingModel } from '../models/WaterReading';
-import { AnomalyModel } from '../models/Anomaly';
-import { AlertModel } from '../models/Alert';
-import { EquipmentModel } from '../models/Equipment';
-import { ChemicalDosageModel } from '../models/ChemicalDosage';
+import { ReportModel } from '../models/Report.ts';
+import { WaterReadingModel } from '../models/WaterReading.ts';
+import { AnomalyModel } from '../models/Anomaly.ts';
+import { AlertModel } from '../models/Alert.ts';
+import { EquipmentModel } from '../models/Equipment.ts';
+import { ChemicalDosageModel } from '../models/ChemicalDosage.ts';
 
 const router = Router();
 
